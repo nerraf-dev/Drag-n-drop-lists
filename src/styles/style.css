@@ -1,0 +1,56 @@
+
+.input-form {
+    width: 100%;
+    margin: 5px 0;
+}
+/*  */
+
+.item {
+    cursor: move;
+    border: 1px dashed blue;
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+}
+
+/* .items-container {
+    min-height: 20px;
+    background-color: lightgrey;
+    width: 50%;
+}
+
+.answer-container{
+    min-height: 50px;
+    width: 50%;
+    background-color: lightblue;
+} */
+
+#all-items-container {
+    min-height: 25px;
+}
+
+/* #hardware, #software, */ 
+.dz-area {
+    min-height: 50px;
+    width: 100%;
+    border: 2px dotted green;
+}
+
+#hardware {
+    background-color: lightcyan;
+    /* border: 2px dotted green; */
+}
+
+#software {
+    background-color: lightcyan;
+
+}
+
+#game-name {
+
+}
+
+button#new-game {
+    background-color: lightgreen;
+    margin-top: 25px;
+}

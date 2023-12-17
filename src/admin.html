@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/dragula.css">
+    
+    <title>Drag 'n' Drop Testing</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h2>
+                    Drag 'n' Drop Setup
+                </h2>
+                <p>
+                    Create a quick word drag 'n' drop game. Create (at least) 2 lists of words below and then hit submit.
+                </p>
+                <ul>
+                    <li>Add the name of your game.</li>
+                    <li>Add the 1st category title</li>
+                    <li>Add the items for that category. Enter each item on a new line.</li>
+                    <li>Repeat for the 2nd category.</li>
+                    <li>Click the "+" button if you want to add a new category.</li>
+                </ul>
+
+                <p>
+                    When you hit submit you will be taken to the game page, where all the items will be shuffled in to one big list ready for your contestents to drag in to place.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <!-- 
+                    how many 'dropzones'?
+
+                 -->
+
+                 <button id="add-category">+</button>
+                <form id="item-form">
+                    <input type="text" name="game-name" class="input-form" id="game-name" placeholder="Name of the game">
+                    
+                    <input type="text" name="category1" class="input-form category-name" id="category1" placeholder="Enter category name"> <br>
+                    <textarea class="input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea> <br>
+                    <hr>
+                    
+                    <input type="text" name="category2" class="input-form category-name" id="category2" placeholder="Enter category name"> <br>
+                    <textarea class="input-form input-items" id="item-form" placeholder="Enter items, one per line"></textarea> <br>
+                    <button id='form-submit' type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js" integrity="sha512-NgXVRE+Mxxf647SqmbB9wPS5SEpWiLFp5G7ItUNFi+GVUyQeP+7w4vnKtc2O/Dm74TpTFKXNjakd40pfSKNulg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> 
+    
+    <!-- <script src="scripts/script.js"></script> -->
+    <script src="scripts/admin.js"></script>
+    
+</body>
+</html>
