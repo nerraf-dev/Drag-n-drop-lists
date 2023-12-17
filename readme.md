@@ -14,7 +14,7 @@ A simple HTML drag and drop application that allows users to categorise items fr
 To install this application, simply clone the repository and open `index.html` in your preferred web browser.
 
 ```bash
-git clone https://github.com/yourusername/drag-n-drop-app.git
+git clone https://github.com/nerraf-dev/Drag-n-drop-lists
 cd drag-n-drop-app
 ```
 
@@ -30,4 +30,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
+
+## Credits
+
+This project uses [Dragula](https://github.com/bevacqua/dragula), a drag and drop library for JavaScript. We thank the authors and contributors of Dragula for their work.
