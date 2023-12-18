@@ -1,7 +1,7 @@
+var categoryNumber = 3; // starting number for new categories as 2 form items exist already
+
 const addCategoryBtn = document.getElementById('add-category');
 addCategoryBtn.addEventListener('click', addCategory);
-
-var categoryNumber = 3; // starting number for new categories as 2 form items exist already
 
 function addCategory() {
     // add another category

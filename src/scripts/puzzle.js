@@ -59,25 +59,6 @@ var totalElements = document.getElementById('all-items-container').childElementC
 // Assuming your draggable items look something like this:
 // <div class="item" data-category="hardware">Item 1</div>
 var feedback = document.getElementById('feedback');
-// var correct = 0;
-// var incorrect = 0;
-// drake.on('drop', function(el, target, source, sibling) {
-//     // Get the correct category from the dropped item
-//     var correctCategory = el.getAttribute('data-category');
-
-//     // Get the ID of the category it was dropped into
-//     var droppedCategory = target.id;
-//     console.log(droppedCategory)
-//     // Check if the answer is correct
-//     if (correctCategory === droppedCategory) {
-//         console.log('Correct!' + el.getAttribute('data-category'));
-//         correct++;
-//     } else {
-//         console.log('INCORRECT');
-//         // feedback.textContent = 'Incorrect.';
-//         incorrect++;
-//     }
-//     });
 
 const checkAnswerBtn = document.getElementById('check-answers');
 checkAnswerBtn.addEventListener('click', checkAnswers);
@@ -114,5 +95,39 @@ function checkAnswers() {
     }
 }
 
+document.getElementById('download-button').addEventListener('click', function() {
+    console.log('Download button clicked');
+    // Create an object to hold the game data
+    var gameData = {};
 
+    // Get the game name and categories from local storage
+    gameData.gameName = localStorage.getItem('gameName');
+    gameData.categories = JSON.parse(localStorage.getItem('categories'));
 
+    // Convert the object to a JSON string
+    var jsonString = JSON.stringify(gameData, null, 2);
+
+    // Create a new Blob object from the JSON string
+    var blob = new Blob([jsonString], {type: "application/json"});
+
+    // Create a URL for the Blob object
+    var url = URL.createObjectURL(blob);
+
+    // Create a link element
+    var downloadLink = document.createElement('a');
+
+    // Set the download attribute of the link element to the desired file name
+    downloadLink.download = 'game-data.json';
+
+    // Set the href attribute of the link element to the blob URL
+    downloadLink.href = url;
+
+    // Append the link element to the body
+    document.body.appendChild(downloadLink);
+
+    // Programmatically click the link to start the download
+    downloadLink.click();
+
+    // Remove the link element from the body
+    document.body.removeChild(downloadLink);
+});

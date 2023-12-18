@@ -1,0 +1,32 @@
+{
+  "gameName": "Number Systems",
+  "categories": [
+    {
+      "name": "Binary",
+      "items": [
+        "1010",
+        "1100",
+        "1111",
+        "1001"
+      ]
+    },
+    {
+      "name": "Hexadecimal",
+      "items": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "name": "Decimal",
+      "items": [
+        "10",
+        "11",
+        "12",
+        "13"
+      ]
+    }
+  ]
+}
