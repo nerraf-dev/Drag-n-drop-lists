@@ -83,13 +83,6 @@ const checkAnswerBtn = document.getElementById('check-answers');
 checkAnswerBtn.addEventListener('click', checkAnswers);
 
 function checkAnswers() {
-    // for each category/dropzone:
-    // for each item in the dropzone:
-    // check if the item's data-category attribute matches the dropzone's id
-    // if it does, increment correct
-    // if it doesn't, increment incorrect
-    // correct + incorrect MUST not exceed the total number of items
-    //Output result in element with id 'feedback'
     var correct = 0;
     var incorrect = 0;
     for (var i = 0; i < categories.length; i++) {
@@ -119,16 +112,7 @@ function checkAnswers() {
         console.log("You have " + correct + " correct answers.");
         feedback.textContent = "You have " + correct + " out of " + totalElements + " correct answers.";
     }
-
-
-
-// if (correct === 0 && incorrect === 0) {
-//     console.log("You haven't answered any questions.");
-//     feedback.textContent = "You haven't answered any questions.";
-// } else {
-//     console.log("You have " + correct + " correct answers.");
-//     feedback.textContent = "You have " + correct + " out of " + totalElements + " correct answers.";
-
-// }
-
 }
+
+
+

@@ -42,17 +42,21 @@
 
                  -->
 
-                 <button id="add-category">+</button>
-                <form id="item-form">
-                    <input type="text" name="game-name" class="input-form" id="game-name" placeholder="Name of the game">
+                 <button id="add-category">+</button> <input type="file" name="file-input" id="file-input">
+                <div id="item-form">
+                    <form>
+                    <!-- <div id="quiz-create-form-container"> -->
+                        <input type="text" name="game-name" class="input-form" id="game-name" placeholder="Name of the game">
+                        
+                        <input type="text" name="category1" class="input-form category-name" id="category1" placeholder="Enter category name"> <br>
+                        <textarea class="input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea> <br>
+                        <hr>
+                        
+                        <input type="text" name="category2" class="input-form category-name" id="category2" placeholder="Enter category name"> <br>
+                        <textarea class="input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea>
+                        <button id='form-submit' type="submit">Submit</button>
+                    <!-- </div> -->
                     
-                    <input type="text" name="category1" class="input-form category-name" id="category1" placeholder="Enter category name"> <br>
-                    <textarea class="input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea> <br>
-                    <hr>
-                    
-                    <input type="text" name="category2" class="input-form category-name" id="category2" placeholder="Enter category name"> <br>
-                    <textarea class="input-form input-items" id="item-form" placeholder="Enter items, one per line"></textarea> <br>
-                    <button id='form-submit' type="submit">Submit</button>
                 </form>
             </div>
         </div>
