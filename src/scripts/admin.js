@@ -4,6 +4,8 @@ const addCategoryBtn = document.getElementById('add-category');
 addCategoryBtn.addEventListener('click', addCategory);
 
 function addCategory() {
+    console.log('add category clicked');
+    var form = document.getElementById('item-form').getElementsByTagName('form')[0];
     // add another category
     var formSubmit = document.getElementById('form-submit');
     var itemForm = document.getElementById('item-form');
@@ -21,9 +23,10 @@ function addCategory() {
     newItems.id = 'category'+categoryNumber+'-items';
     newItems.placeholder = 'Enter each new item on a new line';
 
-    itemForm.insertBefore(hr, formSubmit);
-    itemForm.insertBefore(newCategory, formSubmit);
-    itemForm.insertBefore(newItems, formSubmit);
+
+    form.insertBefore(hr, formSubmit);
+    form.insertBefore(newCategory, formSubmit);
+    form.insertBefore(newItems, formSubmit);
 
     categoryNumber++;
 }

@@ -1,0 +1,23 @@
+{
+  "gameName": "Word types",
+  "categories": [
+    {
+      "name": "Adjectives",
+      "items": [
+        "slow",
+        "blue",
+        "red",
+        "tall"
+      ]
+    },
+    {
+      "name": "Nouns",
+      "items": [
+        "table",
+        "Steve",
+        "Paris",
+        "happiness"
+      ]
+    }
+  ]
+}
