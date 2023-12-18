@@ -15,7 +15,7 @@ To install this application, simply clone the repository and open `index.html` i
 
 ```bash
 git clone https://github.com/nerraf-dev/Drag-n-drop-lists
-cd drag-n-drop-app
+cd Drag-n-drop-lists
 ```
 
 Then open `index.html` in your browser and follow on-screen instructions.
