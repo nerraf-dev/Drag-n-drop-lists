@@ -27,12 +27,7 @@ shuffle('all-items-container');
 
 // Create the category titles and drop zones
 var dropZones = document.getElementById('dropzones');
-var html = `
-    <div class="col-sm">
-        <h3>Hardware</h3>
-        <div id="hardware"></div>
-    </div>
-`;
+
 for (var i=0; i < categories.length; i++){
     var dz = document.createElement('div');
     var id = categories[i].name.replace(/\s+/g, '-');
@@ -117,7 +112,7 @@ document.getElementById('download-button').addEventListener('click', function() 
     var downloadLink = document.createElement('a');
 
     // Set the download attribute of the link element to the desired file name
-    downloadLink.download = 'game-data.json';
+    downloadLink.download = '{gameData.gameName}.json';
 
     // Set the href attribute of the link element to the blob URL
     downloadLink.href = url;

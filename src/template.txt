@@ -1,0 +1,21 @@
+{
+  "gameName": "Your game name",
+  "categories": [
+    {
+      "name": "Your 1st category name",
+      "items": [
+        "Your 1st item. Put each item",
+        "on it's own line. Don't forget the comma!",
+        "Unless it's the last item!"
+
+      ]
+    },
+    {
+      "name": "Your 2nd category name",
+      "items": [
+        "Your 1st item",
+        "Your 2nd item"
+      ]
+    }
+  ]
+}

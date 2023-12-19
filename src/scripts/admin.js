@@ -127,6 +127,7 @@ document.getElementById('file-input').addEventListener('change', function(e) {
 
     // Add the submit button
     var submitButton = document.createElement('button');
+    submitButton.className = 'btn btn-success';
     submitButton.id = 'form-submit';
     submitButton.type = 'submit';
     submitButton.textContent = 'Submit';
