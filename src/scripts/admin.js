@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('item-form').getElementsByTagName('form')[0];
         // add another category
         const formSubmit = document.getElementById('form-submit');
-        const itemForm = document.getElementById('item-form');
         const hr = document.createElement('hr');
         const newCategory = document.createElement('input');
         newCategory.type = 'text';
@@ -22,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
         newItems.className = 'input-form input-items';
         newItems.id = 'category'+categoryNumber+'-items';
         newItems.placeholder = 'Enter each new item on a new line';
-
 
         form.insertBefore(hr, formSubmit);
         form.insertBefore(newCategory, formSubmit);
