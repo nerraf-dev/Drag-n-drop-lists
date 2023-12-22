@@ -66,6 +66,7 @@
                                 <li>Enter the items for each category. ONE per line.</li>
                                 <li>Press the "+ Category" button to add extra categories</li>
                                 <li>Press "Submit"</li>
+
                             </ul>
                         </div>
                         <div class="col">
@@ -122,38 +123,19 @@
             </div>
           </div>
 
-        <!-- Form -->
         <div class="row justify-content-md-center mt-4">
             <div class="col-6">
+                <!-- INPUT FORM -->
                  <div id="item-form">
                     <form>
-                        <div class="mb-3">
-                            <!-- <label for="game-name" class="form-label">Game Name</label> -->
-                            <input type="text" name="game-name" class="form-control" id="game-name" placeholder="Name of the game">
-                        </div>
+                        <input type="text" name="game-name" class="input-form" id="game-name" placeholder="Name of the game">
+                        
+                        <input type="text" name="category1" class="input-form category-name" id="category1" placeholder="Enter category name"> <br>
+                        <textarea class="input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea> <br>
                         <hr>
-                        <div class="mb-3">
-                            <!-- <label for="category1">Category Name:</label> -->
-                            <input type="text" name="category1" class="form-control category-name" id="category1" placeholder="Enter category name">
-                        </div>
                         
-                        <div class="mb-3">
-                            <!-- <label for="item-input">Items:</label> -->
-                            <textarea class="form-control input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea>
-                        </div>
-                        
-                        <hr>
-
-                        <div class="mb-3">
-                            <!-- <label for="category2">Category Name:</label> -->
-                            <input type="text" name="category2" class="form-control input-form category-name" id="category2" placeholder="Enter category name">
-                        </div>
-
-                        <div class="mb-3">
-                            <!-- <label for="item-input">Items:</label> -->
-                            <textarea class="form-control input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea>
-                        </div>
-                        
+                        <input type="text" name="category2" class="input-form category-name" id="category2" placeholder="Enter category name"> <br>
+                        <textarea class="input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea>
                         <div class="row justify-content-md-center">
                             <div class="col-6 text-center">
                                 <button class="btn btn-success" id='form-submit' type="submit">Submit</button>
