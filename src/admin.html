@@ -18,7 +18,7 @@
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="mb-2 navbar-nav me-auto mb-lg-0">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="admin.html">Create!</a></li>
             </ul>
@@ -26,7 +26,7 @@
         </div>
     </nav>
 
-    <main class="container-fluid mt-5 pt-1">
+    <main class="pt-1 mt-5 container-fluid">
         <!-- JUMBOTRON -->
         <div class="my-2">  <!-- my-2 is margin top and bottom 2 -->
             <!-- p-5: set all padding to 20px -->
@@ -47,7 +47,7 @@
                     <li>Fill in the form below</li>
                     <li>Upload a template file</li>
                 </ol>
-                <p class="d-inline-flex gap-1">
+                <p class="gap-1 d-inline-flex">
                     <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructions" aria-expanded="false" aria-controls="collapseInstructions">Show Instructions</button>
                 </p>
             </div>
@@ -123,7 +123,7 @@
           </div>
 
         <!-- Form -->
-        <div class="row justify-content-md-center mt-4">
+        <div class="mt-4 row justify-content-md-center">
             <div class="col-6">
                  <div id="item-form">
                     <form>
@@ -134,29 +134,25 @@
                         <hr>
                         <div class="mb-3">
                             <!-- <label for="category1">Category Name:</label> -->
-                            <input type="text" name="category1" class="form-control category-name" id="category1" placeholder="Enter category name">
-                        </div>
-                        
-                        <div class="mb-3">
+                            <input type="text" name="category1" class="mb-2 form-control category-name" id="category1" placeholder="Enter category name">
+      
                             <!-- <label for="item-input">Items:</label> -->
-                            <textarea class="form-control input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea>
+                            <textarea class="form-control input-form input-items" id="category-1-items" placeholder="Enter items, one per line"></textarea>
                         </div>
                         
                         <hr>
 
                         <div class="mb-3">
                             <!-- <label for="category2">Category Name:</label> -->
-                            <input type="text" name="category2" class="form-control input-form category-name" id="category2" placeholder="Enter category name">
-                        </div>
+                            <input type="text" name="category2" class="mb-2 form-control input-form category-name" id="category2" placeholder="Enter category name">
 
-                        <div class="mb-3">
                             <!-- <label for="item-input">Items:</label> -->
-                            <textarea class="form-control input-form input-items" id="item-input" placeholder="Enter items, one per line"></textarea>
+                            <textarea class="form-control input-form input-items" id="category-2-items" placeholder="Enter items, one per line"></textarea>
                         </div>
                         
-                        <div class="row justify-content-md-center">
-                            <div class="col-6 text-center">
-                                <button class="btn btn-success" id='form-submit' type="submit">Submit</button>
+                        <div class="row justify-content-md-center" id="form-submit">
+                            <div class="text-center col-6">
+                                <button class="btn btn-success" type="submit">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -166,7 +162,7 @@
                 <label for="file-input">Load from file:</label>
                 <input type="file" id="file-input">
                 
-                <button class="btn btn-primary mt-2" id="add-category" name="add-category">+ Category</button>
+                <button class="mt-2 btn btn-primary" id="add-category" name="add-category">+ Category</button>
             </div>
         </div>
 

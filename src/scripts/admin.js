@@ -2,30 +2,52 @@ document.addEventListener('DOMContentLoaded', function() {
     
     let categoryNumber = 3; // starting number for new categories as 2 form items exist already
 
-    document.getElementById('add-category').addEventListener('click', function(){
-
+    document.getElementById('add-category').addEventListener('click', function() {
         console.log('add category clicked');
         const form = document.getElementById('item-form').getElementsByTagName('form')[0];
-        // add another category
         const formSubmit = document.getElementById('form-submit');
-        const hr = document.createElement('hr');
-        const newCategory = document.createElement('input');
-        newCategory.type = 'text';
-        newCategory.name = 'category'+categoryNumber;
-        newCategory.className = 'input-form category-name';
-        newCategory.id = 'category'+categoryNumber;
-        newCategory.placeholder = 'Category name';
+    
+        // Helper function to create an element with given attributes
+        function createElement(type, attributes) {
+            const element = document.createElement(type);
+            for (let key in attributes) {
+                element[key] = attributes[key];
+            }
+            return element;
+        }
+    
+        const hr = createElement('hr');
+        const formElementDiv = createElement('div', {
+            className: 'mb-3'
+        });
+        const newCategory = createElement('input', {
+            type: 'text',
+            name: 'category' + categoryNumber,
+            className: 'form-control category-name',
+            id: 'category' + categoryNumber,
+            placeholder: 'Enter category name'
+        });
+        
+        formElementDiv.appendChild(newCategory);
 
-        const newItems = document.createElement('textarea');
-        newItems.name = 'category'+categoryNumber+'-items';
-        newItems.className = 'input-form input-items';
-        newItems.id = 'category'+categoryNumber+'-items';
-        newItems.placeholder = 'Enter each new item on a new line';
+        const itemsDiv = createElement('div', {
+            className: 'mb-3'
+        });
 
+        const newItems = createElement('textarea', {
+            name: 'category-' + categoryNumber + '-items',
+            className: 'form-control input-form input-items',
+            id: 'category-' + categoryNumber + '-items',
+            placeholder: 'Enter each new item on a new line'
+        });
+    
+        
         form.insertBefore(hr, formSubmit);
-        form.insertBefore(newCategory, formSubmit);
-        form.insertBefore(newItems, formSubmit);
-
+        form.insertBefore(formElementDiv, formSubmit);
+        formElementDiv.appendChild(newItems);
+        
+        form.insertBefore(formElementDiv, formSubmit);
+    
         categoryNumber++;
     });
 
