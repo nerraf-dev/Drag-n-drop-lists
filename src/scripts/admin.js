@@ -1,4 +1,5 @@
 // Helper functions
+
 function createInput(type, name, className, id, placeholder, value) {
     const input = document.createElement(type);
     input.name = name;
@@ -9,9 +10,17 @@ function createInput(type, name, className, id, placeholder, value) {
     return input;
 }
 
-function createDiv(className) {
+function createDiv(className, attributes = {}) {
     const div = document.createElement('div');
     div.className = className;
+
+    // Set attributes
+    for (let key in attributes) {
+        if (attributes.hasOwnProperty(key)) {
+            div.setAttribute(key, attributes[key]);
+        }
+    }
+
     return div;
 }
 
@@ -26,6 +35,7 @@ function createElement(type, attributes) {
 document.addEventListener('DOMContentLoaded', function() {
     let categoryNumber = 3; // starting number for new categories as 2 form items exist already
 
+    // Add a new category to the form - button event listener
     document.getElementById('add-category').addEventListener('click', function() {
         console.log('add category clicked');
         const form = document.getElementById('item-form').getElementsByTagName('form')[0];
@@ -58,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
         categoryNumber++;
     });
 
+    // Submit the form - button event listener
     document.getElementById('item-form').addEventListener('submit', function(event) {
         // Prevent the form from being submitted normally
         event.preventDefault();
@@ -81,24 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'puzzle.html';
     });
 
-
-    // Load quiz settings from a file
-    function createInput(type, name, className, id, placeholder, value) {
-        const input = document.createElement(type);
-        input.name = name;
-        input.className = className;
-        input.id = id;
-        input.placeholder = placeholder;
-        input.value = value;
-        return input;
-    }
-    
-    function createDiv(className) {
-        const div = document.createElement('div');
-        div.className = className;
-        return div;
-    }
-    
+    // Load a game settings file - file input event listener
     document.getElementById('file-input').addEventListener('change', function(e) {
         const file = e.target.files[0];
         const reader = new FileReader();
@@ -129,8 +123,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const submitButtonDiv = createDiv('row justify-content-md-center');
             submitButtonDiv.id = 'form-submit';
             const submitButtonCol = createDiv('text-center col-6');
-            const submitButton = createInput('button', 'btn-submit', 'btn btn-success', 'create-game', '', '');
-            submitButton.type = 'submit';
+            const submitButton = createElement('button', { className: 'btn btn-success', id: 'create-game', type: 'submit' });
+            submitButton.innerHTML = 'Create Game';
+            // submitButton.type = 'submit';
             submitButtonCol.appendChild(submitButton);
             submitButtonDiv.appendChild(submitButtonCol);
             form.appendChild(submitButtonDiv);
