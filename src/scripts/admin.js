@@ -1,41 +1,28 @@
 // Helper functions
-
 function createInput(type, name, className, id, placeholder, value) {
-    const input = document.createElement(type);
-    input.name = name;
-    input.className = className;
-    input.id = id;
-    input.placeholder = placeholder;
-    input.value = value;
-    return input;
+    return Object.assign(document.createElement(type), { name, className, id, placeholder, value });
 }
 
 function createDiv(className, attributes = {}) {
     const div = document.createElement('div');
     div.className = className;
-
-    // Set attributes
-    for (let key in attributes) {
-        if (attributes.hasOwnProperty(key)) {
-            div.setAttribute(key, attributes[key]);
-        }
-    }
-
+    Object.assign(div, attributes);
     return div;
 }
 
 function createElement(type, attributes) {
-    const element = document.createElement(type);
-    for (let key in attributes) {
-        element[key] = attributes[key];
-    }
-    return element;
+    return Object.assign(document.createElement(type), attributes);
 }
 
-const form = document.getElementById('item-form').getElementsByTagName('form')[0];
-const formSubmit = document.getElementById('form-submit');
+
+// Variables
+const form = document.querySelector('#item-form form');
 const formAccordian = document.getElementById('categories');
 let categoryNumber = 3; // starting number for new categories as 2 form items exist already
+
+const formSubmit = document.getElementById('form-submit');
+
+
 
 document.addEventListener('DOMContentLoaded', function() {    
 
@@ -85,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const newCategory = createElement('input', {
             type: 'text',
             name: `category-${categoryNumber}-name`,
-            className: 'form-control category-name',
+            className: 'mb-2 input-form form-control category-name',
             id: `category-${categoryNumber}-name`,
             placeholder: 'Enter category name'
         });
@@ -100,13 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
             placeholder: 'Enter each new item on a new line'
         });
 
-        // let fragment = document.createDocumentFragment();
-        // fragment.appendChild(newCategory);
-        // fragment.appendChild(newItems);
-        // // formElementDiv.appendChild(newCategory);
-        // // formElementDiv.appendChild(newItems);
-        
-        // accordianHeader.appendChild(accordianButton);
+
         accordianItem.appendChild(accordianHeader);
 
         formElementDiv.appendChild(newCategory);
