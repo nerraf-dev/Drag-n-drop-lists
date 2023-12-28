@@ -1,34 +1,110 @@
-document.addEventListener('DOMContentLoaded', function() {
-    
-    let categoryNumber = 3; // starting number for new categories as 2 form items exist already
+// Helper functions
+function createInput(type, name, className, id, placeholder, value) {
+    return Object.assign(document.createElement(type), { name, className, id, placeholder, value });
+}
 
-    document.getElementById('add-category').addEventListener('click', function(){
+function createDiv(className, attributes = {}) {
+    const div = document.createElement('div');
+    div.className = className;
+    Object.assign(div, attributes);
+    return div;
+}
 
+function createElement(type, attributes) {
+    return Object.assign(document.createElement(type), attributes);
+}
+
+
+// Variables
+const form = document.querySelector('#item-form form');
+const formAccordian = document.getElementById('categories');
+let categoryNumber = 3; // starting number for new categories as 2 form items exist already
+
+const formSubmit = document.getElementById('form-submit');
+
+
+
+document.addEventListener('DOMContentLoaded', function() {    
+
+    // Add a new category to the form - button event listener
+    document.getElementById('add-category').addEventListener('click', function() {
         console.log('add category clicked');
-        const form = document.getElementById('item-form').getElementsByTagName('form')[0];
-        // add another category
-        const formSubmit = document.getElementById('form-submit');
-        const hr = document.createElement('hr');
-        const newCategory = document.createElement('input');
-        newCategory.type = 'text';
-        newCategory.name = 'category'+categoryNumber;
-        newCategory.className = 'input-form category-name';
-        newCategory.id = 'category'+categoryNumber;
-        newCategory.placeholder = 'Category name';
 
-        const newItems = document.createElement('textarea');
-        newItems.name = 'category'+categoryNumber+'-items';
-        newItems.className = 'input-form input-items';
-        newItems.id = 'category'+categoryNumber+'-items';
-        newItems.placeholder = 'Enter each new item on a new line';
+        let accordianFragment = document.createDocumentFragment();
 
-        form.insertBefore(hr, formSubmit);
-        form.insertBefore(newCategory, formSubmit);
-        form.insertBefore(newItems, formSubmit);
+        // create accordian item
+        const accordianItem = createElement('div', { 
+            className: 'accordion-item', 
+            id: `category-${categoryNumber}` 
+        });
+        // create accordian-header
+        const accordianHeader = createElement('h2', {
+            className: 'accordion-header',
+            id: `category-${categoryNumber}-header`
+        });
+        accordianHeader.innerHTML = `<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#category-${categoryNumber}-collapse" aria-expanded="false" aria-controls="category-${categoryNumber}-collapse">Category ${categoryNumber}</button>`;
+
+        // // create accordian button
+        // const accordianButton = createElement('button', {
+        //     className: 'accordion-button collapsed',
+        //     type: 'button',
+        //     'data-bs-toggle': 'collapse',
+        //     'data-bs-target': `#category-${categoryNumber}-collapse`,
+        //     'aria-expanded': 'false',
+        //     'aria-controls': `category-${categoryNumber}-collapse`
+        // });
+
+        // create collapse
+        const accordianCollapse = createElement('div', {
+            className: 'accordion-collapse collapse',
+            id: `category-${categoryNumber}-collapse`,
+            'aria-labelledby': `category-${categoryNumber}-header`,
+            'data-bs-parent': '#categories'
+        });
+
+        // create accordian-body
+        const accordianBody = createElement('div', {
+            className: 'accordion-body'
+        });
+        
+
+        const formElementDiv = createElement('div', { className: 'mb-3' });
+        const newCategory = createElement('input', {
+            type: 'text',
+            name: `category-${categoryNumber}-name`,
+            className: 'mb-2 input-form form-control category-name',
+            id: `category-${categoryNumber}-name`,
+            placeholder: 'Enter category name'
+        });
+
+        
+
+        const itemsDiv = createElement('div', { className: 'mb-3' });
+        const newItems = createElement('textarea', {
+            name: `category-${categoryNumber}-items`,
+            className: 'form-control input-form input-items',
+            id: `category-${categoryNumber}-items`,
+            placeholder: 'Enter each new item on a new line'
+        });
+
+
+        accordianItem.appendChild(accordianHeader);
+
+        formElementDiv.appendChild(newCategory);
+        formElementDiv.appendChild(newItems);
+        accordianBody.appendChild(formElementDiv);
+        accordianCollapse.appendChild(accordianBody);
+        accordianItem.appendChild(accordianCollapse);
+        
+        accordianFragment.appendChild(accordianItem);
+
+        formAccordian.appendChild(accordianFragment);
+        // form.insertBefore(fragment, formSubmit);
 
         categoryNumber++;
     });
 
+    // Submit the form - button event listener
     document.getElementById('item-form').addEventListener('submit', function(event) {
         // Prevent the form from being submitted normally
         event.preventDefault();
@@ -52,92 +128,48 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'puzzle.html';
     });
 
-
-    // Load quiz settings from a file
+    // Load a game settings file - file input event listener
     document.getElementById('file-input').addEventListener('change', function(e) {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = function(e) {
-            const contents = e.target.result;
             let gameSettings;
             try {
-                gameSettings = JSON.parse(contents);
-                console.log(gameSettings);
+                gameSettings = JSON.parse(e.target.result);
             } catch (e) {
                 console.error("Error parsing file:", e);
+                return;
             }
-            // Now you can use gameSettings to populate your form or initialize your quiz
-            console.log(contents);
-            
-            // Clear existing form fields
-        const categoryInputs = document.getElementsByClassName('category-name');
-        const itemInputs = document.getElementsByClassName('input-items');
-
-        // Get a reference to the form
-        const form = document.getElementById('item-form').getElementsByTagName('form')[0];
-
-        // Clear the form
-        while (form.firstChild) {
-            form.removeChild(form.firstChild);
-        }
-
-        // Add the game name input field
-        const gameNameInput = document.createElement('input');
-        gameNameInput.type = 'text';
-        gameNameInput.name = 'game-name';
-        gameNameInput.className = 'input-form';
-        gameNameInput.id = 'game-name';
-        gameNameInput.placeholder = 'Name of the game';
-        gameNameInput.value = gameSettings.gameName;
-        form.appendChild(gameNameInput);
-
-
-        while (categoryInputs.length > 0) {
-            categoryInputs[0].parentNode.removeChild(categoryInputs[0]);
-            itemInputs[0].parentNode.removeChild(itemInputs[0]);
-        }
-
-            // Loop through categories
+    
+            const form = document.getElementById('item-form').getElementsByTagName('form')[0];
+            form.innerHTML = ''; // Clear the form
+    
+            const gameNameDiv = createDiv('mb-3');
+            gameNameDiv.appendChild(createInput('input', 'game-name', 'form-control', 'game-name', 'Name of the game', gameSettings.gameName));
+            form.appendChild(gameNameDiv);
+    
             gameSettings.categories.forEach(function(category, index) {
-                // Create new input fields
-                const categoryNameInput = document.createElement('input');
-                categoryNameInput.type = 'text';
-                categoryNameInput.name = 'category' + (index + 1);
-                categoryNameInput.className = 'input-form category-name';
-                categoryNameInput.id = 'category' + (index + 1);
-                categoryNameInput.placeholder = 'Enter category name';
-                categoryNameInput.value = category.name;
-
-                const itemInput = document.createElement('textarea');
-                itemInput.className = 'input-form input-items';
-                itemInput.id = 'item-input' + (index + 1);
-                itemInput.placeholder = 'Enter items, one per line';
-                itemInput.value = category.items.join('\n');
-
-                // Append input fields to form
-                
-                form.appendChild(categoryNameInput);
-                form.appendChild(document.createElement('br'));
-                form.appendChild(itemInput);
-                form.appendChild(document.createElement('br'));
+                const categoryDiv = createDiv('mb-3');
+                categoryDiv.appendChild(createInput('input', 'category' + (index + 1), 'mb-2 form-control category-name', 'category' + (index + 1), 'Enter category name', category.name));
+                categoryDiv.appendChild(createInput('textarea', '', 'form-control input-form input-items', 'category-' + (index + 1) + '-items', 'Enter items, one per line', category.items.join('\n')));
+                form.appendChild(categoryDiv);
                 form.appendChild(document.createElement('hr'));
-        });
-
-        // Add the submit button
-        const submitButton = document.createElement('button');
-        submitButton.className = 'btn btn-success';
-        submitButton.id = 'form-submit';
-        submitButton.type = 'submit';
-        submitButton.textContent = 'Submit';
-        form.appendChild(submitButton);
-
-            };
-            reader.readAsText(file);
-            reader.onerror = function(e) {
-                console.error("Error reading file:", e);
-                reader.onerror = function(e) {
-                    console.error("Error reading file:", e);
-                };
-            };
+            });
+    
+            const submitButtonDiv = createDiv('row justify-content-md-center');
+            submitButtonDiv.id = 'form-submit';
+            const submitButtonCol = createDiv('text-center col-6');
+            const submitButton = createElement('button', { className: 'btn btn-success', id: 'create-game', type: 'submit' });
+            submitButton.innerHTML = 'Create Game';
+            // submitButton.type = 'submit';
+            submitButtonCol.appendChild(submitButton);
+            submitButtonDiv.appendChild(submitButtonCol);
+            form.appendChild(submitButtonDiv);
+            submitButton.innerHTML='Create Game';
+        };
+        reader.readAsText(file);
+        reader.onerror = function(e) {
+            console.error("Error reading file:", e);
+        };
     });
 });
