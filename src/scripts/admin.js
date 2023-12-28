@@ -32,38 +32,93 @@ function createElement(type, attributes) {
     return element;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    let categoryNumber = 3; // starting number for new categories as 2 form items exist already
+const form = document.getElementById('item-form').getElementsByTagName('form')[0];
+const formSubmit = document.getElementById('form-submit');
+const formAccordian = document.getElementById('categories');
+let categoryNumber = 3; // starting number for new categories as 2 form items exist already
+
+document.addEventListener('DOMContentLoaded', function() {    
 
     // Add a new category to the form - button event listener
     document.getElementById('add-category').addEventListener('click', function() {
         console.log('add category clicked');
-        const form = document.getElementById('item-form').getElementsByTagName('form')[0];
-        const formSubmit = document.getElementById('form-submit');
 
-        const hr = createElement('hr');
+        let accordianFragment = document.createDocumentFragment();
+
+        // create accordian item
+        const accordianItem = createElement('div', { 
+            className: 'accordion-item', 
+            id: `category-${categoryNumber}` 
+        });
+        // create accordian-header
+        const accordianHeader = createElement('h2', {
+            className: 'accordion-header',
+            id: `category-${categoryNumber}-header`
+        });
+        accordianHeader.innerHTML = `<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#category-${categoryNumber}-collapse" aria-expanded="false" aria-controls="category-${categoryNumber}-collapse">Category ${categoryNumber}</button>`;
+
+        // // create accordian button
+        // const accordianButton = createElement('button', {
+        //     className: 'accordion-button collapsed',
+        //     type: 'button',
+        //     'data-bs-toggle': 'collapse',
+        //     'data-bs-target': `#category-${categoryNumber}-collapse`,
+        //     'aria-expanded': 'false',
+        //     'aria-controls': `category-${categoryNumber}-collapse`
+        // });
+
+        // create collapse
+        const accordianCollapse = createElement('div', {
+            className: 'accordion-collapse collapse',
+            id: `category-${categoryNumber}-collapse`,
+            'aria-labelledby': `category-${categoryNumber}-header`,
+            'data-bs-parent': '#categories'
+        });
+
+        // create accordian-body
+        const accordianBody = createElement('div', {
+            className: 'accordion-body'
+        });
+        
+
         const formElementDiv = createElement('div', { className: 'mb-3' });
         const newCategory = createElement('input', {
             type: 'text',
-            name: 'category' + categoryNumber,
+            name: `category-${categoryNumber}-name`,
             className: 'form-control category-name',
-            id: 'category' + categoryNumber,
+            id: `category-${categoryNumber}-name`,
             placeholder: 'Enter category name'
         });
 
-        formElementDiv.appendChild(newCategory);
+        
 
         const itemsDiv = createElement('div', { className: 'mb-3' });
         const newItems = createElement('textarea', {
-            name: 'category-' + categoryNumber + '-items',
+            name: `category-${categoryNumber}-items`,
             className: 'form-control input-form input-items',
-            id: 'category-' + categoryNumber + '-items',
+            id: `category-${categoryNumber}-items`,
             placeholder: 'Enter each new item on a new line'
         });
 
+        // let fragment = document.createDocumentFragment();
+        // fragment.appendChild(newCategory);
+        // fragment.appendChild(newItems);
+        // // formElementDiv.appendChild(newCategory);
+        // // formElementDiv.appendChild(newItems);
+        
+        // accordianHeader.appendChild(accordianButton);
+        accordianItem.appendChild(accordianHeader);
+
+        formElementDiv.appendChild(newCategory);
         formElementDiv.appendChild(newItems);
-        form.insertBefore(hr, formSubmit);
-        form.insertBefore(formElementDiv, formSubmit);
+        accordianBody.appendChild(formElementDiv);
+        accordianCollapse.appendChild(accordianBody);
+        accordianItem.appendChild(accordianCollapse);
+        
+        accordianFragment.appendChild(accordianItem);
+
+        formAccordian.appendChild(accordianFragment);
+        // form.insertBefore(fragment, formSubmit);
 
         categoryNumber++;
     });
