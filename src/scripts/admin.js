@@ -1,180 +1,108 @@
-// Helper functions
-function createInput(type, name, className, id, placeholder) {
-    return Object.assign(document.createElement('input'), {type, name, className, id, placeholder });
-}
+$(document).ready(function() {
+    // Variables
+       
+    let categoryNumber = 3; // starting number for new categories as 2 form items exist already
+    const INITIAL_CATEGORIES_COUNT = 2;
 
-function createDiv(className, attributes = {}) {
-    const div = document.createElement('div');
-    div.className = className;
-    Object.assign(div, attributes);
-    return div;
-}
+    // Event listeners
+    $('#add-category').click(function(){addCategory();});
+    $('#item-form').submit(submitForm);
+    $('#file-input').change(loadGameSettings);
 
-function createElement(type, attributes) {
-    return Object.assign(document.createElement(type), attributes);
-}
+    function addCategory(categoryName = '', categoryItems = []) {
+        console.log('add category clicked');
+        console.log(`categoryNumber: ${categoryNumber}`);
+        console.log(`categoryName: ${categoryName}`);
+        
+        const items = categoryItems ? categoryItems.join('\n') : '';
+        console.log(`categoryItems: ${items}`);
+        const catHtml = `
+            <div class="accordion-item" id="category-${categoryNumber}">
+                <h2 class="accordion-header" id="category-${categoryNumber}-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#category-${categoryNumber}-collapse" aria-expanded="false" aria-controls="category-${categoryNumber}-collapse">Category ${categoryNumber}</button>
+                </h2>
+                <div class="accordion-collapse collapse show" id="category-${categoryNumber}-collapse" aria-labelledby="category-${categoryNumber}-header" data-bs-parent="#categories">
+                    <div class="accordion-body">
+                        <div class="mb-3">
+                            <input type="text" id="category-${categoryNumber}-name" class="mb-2 form-control category-name" name="category-${categoryNumber}-name" placeholder="Enter category name" value=${categoryName}>
+                            <textarea name="category-${categoryNumber}-items" class="form-control input-items" id="category-${categoryNumber}-items" placeholder="Enter each new item on a new line">${items}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+        $(`#category-${categoryNumber-1}`).after(catHtml);
+        categoryNumber++;
+    }
 
-// Variables
-const form = document.querySelector('#item-form');
-const formAccordian = document.getElementById('categories');
-let categoryNumber = 3; // starting number for new categories as 2 form items exist already
+    /**
+     * Submits the form and stores the game name and categories in local storage.
+     * Redirects to the puzzle page.
+     * @param {Event} event - The submit event.
+     */
+    function submitForm(event) {
+        // Prevent the form from being submitted normally
+        event.preventDefault();
+        // Get the game name
+        const gameName = $('#game-name').val();
 
-// Event listeners
-document.getElementById('add-category').addEventListener('click', addCategory);
-document.getElementById('item-form').addEventListener('submit', submitForm);
-document.getElementById('file-input').addEventListener('change', loadGameSettings);
+        // Get the category names and items
+        const categoryNames = $('.category-name').map(function() {
+            return $(this).val();
+        }).get();
+        const categoryItems = $('.input-items').map(function() {
+            return [$(this).val().split('\n').filter(line => line.trim() !== '')];
+        }).get();
 
-function addCategory() {
-    console.log('add category clicked');
+        // Combine the category names and items into an array of objects
+        const categories = categoryNames.map((name, index) => {
+            return {
+                name: name,
+                items: categoryItems[index]
+            };
+        }); 
 
-    const accordianItem = createElement('div', { 
-        className: 'accordion-item', 
-        id: `category-${categoryNumber}` 
-    });
-
-    const accordianHeader = createElement('h2', {
-        className: 'accordion-header',
-        id: `category-${categoryNumber}-header`,
-        innerHTML: `<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#category-${categoryNumber}-collapse" aria-expanded="false" aria-controls="category-${categoryNumber}-collapse">Category ${categoryNumber}</button>`
-    });
-
-    const accordianCollapse = createElement('div', {
-        className: 'accordion-collapse collapse',
-        id: `category-${categoryNumber}-collapse`,
-        'aria-labelledby': `category-${categoryNumber}-header`,
-        'data-bs-parent': '#categories'
-    });
-
-    const accordianBody = createElement('div', { className: 'accordion-body' });
-    const formElementDiv = createElement('div', { className: 'mb-3' });
-    const newCategory = createInput('text', `category-${categoryNumber}-name`, 'mb-2 form-control category-name', `category-${categoryNumber}-name`, 'Enter category name');
-    const newItems = createElement('textarea', {
-        name: `category-${categoryNumber}-items`,
-        className: 'form-control input-items',
-        id: `category-${categoryNumber}-items`,
-        placeholder: 'Enter each new item on a new line'
-    });
-
-    formElementDiv.append(newCategory, newItems);
-    accordianBody.appendChild(formElementDiv);
-    accordianCollapse.appendChild(accordianBody);
-    accordianItem.append(accordianHeader, accordianCollapse);
-    formAccordian.appendChild(accordianItem);
-
-    categoryNumber++;
-}
-
-function submitForm(event) {
-    // Prevent the form from being submitted normally
-    event.preventDefault();
-    console.log('form submitted');
-
-    // Get the game name
-    const gameName = document.getElementById('game-name').value;
-
-    // Get the category names and items
-    const categoryNames = Array.from(document.getElementsByClassName('category-name')).map(input => input.value);
-    const categoryItems = Array.from(document.getElementsByClassName('input-items')).map(input => input.value.split('\n').filter(line => line.trim() !== ''));
-
-    // Combine the category names and items into a single array of objects
-    const categories = categoryNames.map((name, index) => ({ name: name, items: categoryItems[index] }));
-
-    // Store the game name and categories in local storage
-    localStorage.setItem('gameName', gameName);
-    localStorage.setItem('categories', JSON.stringify(categories));
-
-    // Redirect to the puzzle page
-    window.location.href = 'puzzle.html';
-}
-
-function addCategoryWithData(categoryName, categoryItems) {
-    // similar to addCategory, but also sets the values of the new form elements
-
-    const accordianItem = createElement('div', { 
-        className: 'accordion-item', 
-        id: `category-${categoryNumber}` 
-    });
-
-    const accordianHeader = createElement('h2', {
-        className: 'accordion-header',
-        id: `category-${categoryNumber}-header`,
-        innerHTML: `<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#category-${categoryNumber}-collapse" aria-expanded="false" aria-controls="category-${categoryNumber}-collapse">Category ${categoryNumber}</button>`
-    });
-
-    const accordianCollapse = createElement('div', {
-        className: 'accordion-collapse collapse',
-        id: `category-${categoryNumber}-collapse`,
-        'aria-labelledby': `category-${categoryNumber}-header`,
-        'data-bs-parent': '#categories'
-    });
-
-    const accordianBody = createElement('div', { className: 'accordion-body' });
-    const formElementDiv = createElement('div', { className: 'mb-3' });
-    const newCategory = createInput('text', `category-${categoryNumber}-name`, 'mb-2 form-control category-name', `category-${categoryNumber}-name`, 'Enter category name');
-    newCategory.value = categoryName; // set the value
-    const newItems = createElement('textarea', {
-        name: `category-${categoryNumber}-items`,
-        className: 'form-control input-items',
-        id: `category-${categoryNumber}-items`,
-        placeholder: 'Enter each new item on a new line'
-    });
-    newItems.value = categoryItems.join('\n'); // set the value
-
-    formElementDiv.append(newCategory, newItems);
-    accordianBody.appendChild(formElementDiv);
-    accordianCollapse.appendChild(accordianBody);
-    accordianItem.append(accordianHeader, accordianCollapse);
-    formAccordian.appendChild(accordianItem);
-
-    categoryNumber++;
-}
-
-function loadGameSettings(e) {
-    categoryNumber = 1; // reset the category number
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        let gameSettings;
-        try {
-            gameSettings = JSON.parse(e.target.result);
-        } catch (e) {
-            console.error("Error parsing file:", e);
-            return;
-        }
-
-        form.innerHTML = ''; // Clear the form
-        let formFragment = new DocumentFragment();
-        const formElementDiv = createElement('div', { className: 'mb-3' });
-        const gameName = createInput('text', 'game-name', 'mb-2 form-control', 'game-name', 'Enter game name');
-
-        formElementDiv.appendChild(gameName);
-        formFragment.appendChild(formElementDiv);
-        form.appendChild(formFragment);
-
-        // Set the game name
-        document.getElementById('game-name').value = gameSettings.gameName;
-
-        // Create accordion
-        const accordion = createElement('div', { id: 'categories', className: 'accordion' });
-        form.appendChild(accordion);
+        // Store the game name and categories in local storage
+        localStorage.setItem('gameName', gameName);
+        localStorage.setItem('categories', JSON.stringify(categories));
+        // Redirect to the puzzle page
+        window.location.href = 'puzzle.html';
+    }
 
 
-        // create accordion item, append to accordion
-        // create accordion header with button innerHTML, append to accordion item
-        // create accordion collapse, append to accordion item
-        // create accordion body, append to accordion collapse
-        // create form element div, append to accordion body
-        // create category name input, append to form element div
-        // create category items input, append to form element div
-
-
-        // Add each category
-        gameSettings.categories.forEach(function(category) {
-            addCategoryWithData(category.name, category.items);
-        });
-    };
-    reader.readAsText(file);
-    reader.onerror = function(e) {
-        console.error("Error reading file:", e);
-    };
-}
+    function loadGameSettings(e) {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+    
+        reader.onload = function(e) {
+            let gameSettings;
+            try {
+                gameSettings = JSON.parse(e.target.result);
+            } catch (e) {
+                console.error("Error parsing file:", e);
+                // TODO: Inform the user that there was an error parsing the file
+                return;
+            }
+    
+            // Fill in the game name
+            $('#game-name').val(gameSettings.gameName);
+    
+            // Fill in the categories
+            for (let i = 0; i < gameSettings.categories.length; i++) {
+                if (i < INITIAL_CATEGORIES_COUNT) {
+                    $(`#category-${i+1}-name`).val(gameSettings.categories[i].name);
+                    $(`#category-${i+1}-items`).val(gameSettings.categories[i].items.join('\n'));
+                } else {
+                    addCategory(gameSettings.categories[i].name, gameSettings.categories[i].items);
+                }
+            }
+        };
+    
+        reader.onerror = function(e) {
+            console.error("Error reading file:", e);
+            // TODO: Inform the user that there was an error reading the file
+        };
+    
+        reader.readAsText(file);
+    }
+});

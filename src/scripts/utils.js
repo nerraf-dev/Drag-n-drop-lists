@@ -1,23 +1,11 @@
 // Shuffle function
 
 export function shuffle(containerId) {
-    var container = document.getElementById(containerId);
-    var elements = Array.from(container.getElementsByClassName('item'));
-    var shuffledElements = shuffleArray(elements);
+    const container = document.getElementById(containerId);
+    const elements = Array.from(container.getElementsByClassName('item'));
+    let shuffledElements = elements;
 
-    // Clear the container
-    while (container.firstChild) {
-        container.firstChild.remove();
-    }
-
-    // Append the shuffled items
-    for (var i = 0; i < shuffledElements.length; i++) {
-        container.appendChild(shuffledElements[i]);
-    }
-}
-
-function shuffleArray(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = shuffledElements.length, temporaryValue, randomIndex;
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
 
@@ -26,9 +14,19 @@ function shuffleArray(array) {
         currentIndex -= 1;
 
         // And swap it with the current element.
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
+        temporaryValue = shuffledElements[currentIndex];
+        shuffledElements[currentIndex] = shuffledElements[randomIndex];
+        shuffledElements[randomIndex] = temporaryValue;
     }
-return array;
+
+    // Clear the container
+    while (container.firstChild) {
+        container.firstChild.remove();
+    }
+
+    // Append the shuffled items
+    for (let i = 0; i < shuffledElements.length; i++) {
+        container.appendChild(shuffledElements[i]);
+    }
 }
+

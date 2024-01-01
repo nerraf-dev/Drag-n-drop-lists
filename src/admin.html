@@ -33,13 +33,20 @@
             <div class="p-1 text-center bg-body-secondary">
                 <div class="container py-2">
                 <h1 class="text-body-emphasis">Drag 'n' Drop Generator</h1>
+
+                <noscript>
+                    <h1>
+                      This application requires JavaScript to run. Please enable JavaScript in your browser settings.
+                    </h1>
+                  </noscript>
+
                 </div>
             </div>
         </div>
         <!-- JUMBOTRON END -->
           
-        <!-- Content -->
-        <div class="row justify-content-md-center">
+             <!-- Content -->
+        <!-- <div class="row justify-content-md-center">
             <div class="col-md-5">
                 <h2>Getting Started:</h2>
                 <p>To create a drag and drop activity you have two options:</p>
@@ -51,10 +58,10 @@
                     <button class="btn btn-info" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructions" aria-expanded="false" aria-controls="collapseInstructions">Show Instructions</button>
                 </p>
             </div>
-        </div>
+        </div> -->
 
-        <!-- Collapable for intsructions -->
-        <div class="row justify-content-md-center collapse" id="collapseInstructions">
+            <!-- Collapable for intsructions -->
+        <!-- <div class="row justify-content-md-center collapse" id="collapseInstructions">
             <div class="col-md-10">
                 <div class="card card-body">
                     <div class="row">
@@ -81,7 +88,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Modal -->
         <div class="modal" id="eg-file-modal" tabindex="-1">
@@ -125,10 +132,10 @@
         <!-- Form -->
         <div class="mt-4 row justify-content-evenly">
             <!-- TODO: re-introduce the add from file option  -->
-            <!-- <div class="col-4">
+            <div class="col-4">
                 <label for="file-input" class="form-label">Load from file:</label>
                 <input type="file" id="file-input" class="form-control">
-            </div> -->
+            </div>
         </div>
         <div class="mt-4 row justify-content-md-center">
             <div class="col-sm-12 col-lg-12 col-xl-10">
@@ -141,11 +148,11 @@
                         <div class="accordion" id="categories">
                             <div class="accordion-item" id="category-1">
                                 <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#category-1-collapse" aria-expanded="false" aria-controls="category-1-collapse">
                                     Category 1
                                     </button>
                                 </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                                <div id="category-1-collapse" class="accordion-collapse collapse show" aria-labelledby="headingOne">
                                     <div class="accordion-body">
                                         <div class="mb-3">
                                             <!-- <label for="category1">Category Name:</label> -->
@@ -159,24 +166,23 @@
 
                             <div class="accordion-item" id="category-2">
                                 <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#category-2-collapse" aria-expanded="false" aria-controls="category-2-collapse">
                                         Category 2
                                     </button>
                                 </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                                <div id="category-2-collapse" class="accordion-collapse collapse show" aria-labelledby="headingTwo">
                                     <div class="accordion-body">
                                         <div class="mb-3">
                                             <!-- <label for="category2">Category Name:</label> -->
                                             <input type="text" name="category-2-name" class="mb-2 form-control category-name" id="category-2-name" placeholder="Enter category name">
-                    
                                             <!-- <label for="item-input">Items:</label> -->
                                             <textarea class="form-control input-items" id="category-2-items" placeholder="Enter items, one per line"></textarea>
                                         </div>
                                     </div>
                                 </div>
-
-                            <!-- accordian end -->
                             </div>
+                            <!-- accordian end -->
+
                         </div>
 
                         <!-- Sticky Bar Start -->
@@ -213,7 +219,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js" integrity="sha512-NgXVRE+Mxxf647SqmbB9wPS5SEpWiLFp5G7ItUNFi+GVUyQeP+7w4vnKtc2O/Dm74TpTFKXNjakd40pfSKNulg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> 
-    
+    <!-- <script src="scripts/jquery-3.7.1.min.js"></script> -->
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.7.1.js"></script>
     <script src="scripts/admin.js"></script>
     
 </body>
