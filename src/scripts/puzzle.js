@@ -1,77 +1,93 @@
 import { shuffle } from './utils.js';
-// Get the game name and categories from local storage
-var gameName = localStorage.getItem('gameName');
-var categories = JSON.parse(localStorage.getItem('categories'));
 
-console.log(gameName);
-console.log(categories);
-// TODO: Use the game name and categories to create the game
+$(document).ready(function() {
+    const gameName = getGameName();
+    const categories = getCategories();
 
-// Set the game name
-document.getElementById('game-name').textContent = gameName;
-
-// Create list of all draggable items
-var allItems = document.getElementById('all-items-container');
-for (var i = 0; i < categories.length; i++){
-    for (var j = 0; j < categories[i].items.length; j++){
-        var item = document.createElement('div');
-        item.className = 'item';
-        var id = categories[i].name.replace(/\s+/g, '-') + '-container';
-        item.setAttribute('data-category', id);
-        item.textContent = categories[i].items[j];
-        allItems.appendChild(item);
-    }
-}
-shuffle('all-items-container');
-
-
-// Create the category titles and drop zones
-var dropZones = document.getElementById('dropzones');
-
-for (var i=0; i < categories.length; i++){
-    var dz = document.createElement('div');
-    var id = categories[i].name.replace(/\s+/g, '-');
-    dz.className = 'col-sm';
-    dz.innerHTML = `
-        <h3>${categories[i].name}</h3>
-        <div class="dz-area" id="${id}-container"></div>
-    `;
-    dropZones.appendChild(dz);
-}
-
-
-// Create the draggable items
-// Initialize Dragula with the containers you want to make draggable
-var containers = [document.getElementById('all-items-container')];
-categories.forEach(function(category){
-    var id = category.name.replace(/\s+/g, '-') + '-container';
-    containers.push(document.getElementById(id));
+    setGameName(gameName);
+    createItems(categories);
+    createDropZones(categories);
+    initializeDragula(categories);
+    setupCheckAnswersButton(categories);
+    setupDownloadButton();
 });
-var drake = dragula(containers);
-var totalElements = document.getElementById('all-items-container').childElementCount;
 
-// Check function
-// Assuming your draggable items look something like this:
-// <div class="item" data-category="hardware">Item 1</div>
-var feedback = document.getElementById('feedback');
+function getGameName() {
+    return localStorage.getItem('gameName');
+}
 
-const checkAnswerBtn = document.getElementById('check-answers');
-checkAnswerBtn.addEventListener('click', checkAnswers);
+function getCategories() {
+    let categories;
+    try {
+        categories = JSON.parse(localStorage.getItem('categories'));
+    } catch (error) {
+        console.error("Error parsing categories from local storage:", error);
+        categories = [];
+    }
+    return categories;
+}
 
-function checkAnswers() {
-    var correct = 0;
-    var incorrect = 0;
-    for (var i = 0; i < categories.length; i++) {
-        var id = categories[i].name.replace(/\s+/g, '-');
-        var dropZone = document.getElementById(id + '-container');
-        var items = dropZone.getElementsByClassName('item');
-        for (var j = 0; j < items.length; j++) {
-            var item = items[j];
-            var category = item.getAttribute('data-category');
+function setGameName(gameName) {
+    $('#game-name').text(gameName);
+}
+
+function createItems(categories) {
+    const allItems = $('#all-items-container');
+    categories.forEach(category => {
+        category.items.forEach(itemName => {
+            const item = $('<div>').addClass('item').attr('data-category', formatId(category.name)).text(itemName);
+            allItems.append(item);
+        });
+    });
+    shuffle('all-items-container');
+}
+
+function createDropZones(categories) {
+    const dropZones = $('#dropzones');
+    categories.forEach(category => {
+        const dz = $('<div>').addClass('col-sm').html(`
+            <h3>${category.name}</h3>
+            <div class="dz-area" id="${formatId(category.name)}"></div>
+        `);
+        dropZones.append(dz);
+    });
+}
+
+function initializeDragula(categories) {
+    const containers = [$('#all-items-container')[0]];
+    categories.forEach(category => {
+        containers.push(document.getElementById(formatId(category.name)));
+    });
+    dragula(containers);
+}
+
+function setupCheckAnswersButton(categories) {
+    $('#check-answers').on('click', () => checkAnswers(categories));
+}
+
+function setupDownloadButton() {
+    $('#download-button').on('click', downloadGameData);
+}
+
+function formatId(name) {
+    return name.replace(/\s+/g, '-');
+}
+
+function checkAnswers(categories) {
+    let correct = 0;
+    let incorrect = 0;
+    console.log(`categories: ${categories}`);
+    for (let i = 0; i < categories.length; i++) {
+        let id = formatId(categories[i].name);
+        let dropZone = $(`#${id}`);
+        let items = dropZone.find('.item');
+        for (let j = 0; j < items.length; j++) {
+            let item = $(items[j]);
+            let category = item.attr('data-category');
             console.log('ITEM: '+category);
             console.log('CATEGORY: '+category);
-            console.log('DROPZONE: '+dropZone.id);
-            if (dropZone.id === category) {
+            console.log('DROPZONE: '+dropZone.attr('id'));
+            if (dropZone.attr('id') === category) {
                 correct++;
                 console.log('Correct! ' + correct);
             } else {
@@ -81,48 +97,18 @@ function checkAnswers() {
         }
     }
 
-    if (correct === 0 && incorrect === 0) {
-        console.log("You haven't answered any questions.");
-        feedback.textContent = "You haven't answered any questions.";
-    } else {
-        console.log("You have " + correct + " correct answers.");
-        feedback.textContent = "You have " + correct + " out of " + totalElements + " correct answers.";
-    }
+    updateFeedback(correct, incorrect);
 }
 
-document.getElementById('download-button').addEventListener('click', function() {
-    console.log('Download button clicked');
-    // Create an object to hold the game data
-    var gameData = {};
+function updateFeedback(correct, incorrect) {
+    let totalElements = $('.item').length;
+    let feedback = $('#feedback');
 
-    // Get the game name and categories from local storage
-    gameData.gameName = localStorage.getItem('gameName');
-    gameData.categories = JSON.parse(localStorage.getItem('categories'));
-
-    // Convert the object to a JSON string
-    var jsonString = JSON.stringify(gameData, null, 2);
-
-    // Create a new Blob object from the JSON string
-    var blob = new Blob([jsonString], {type: "application/json"});
-
-    // Create a URL for the Blob object
-    var url = URL.createObjectURL(blob);
-
-    // Create a link element
-    var downloadLink = document.createElement('a');
-
-    // Set the download attribute of the link element to the desired file name
-    downloadLink.download = '{gameData.gameName}.json';
-
-    // Set the href attribute of the link element to the blob URL
-    downloadLink.href = url;
-
-    // Append the link element to the body
-    document.body.appendChild(downloadLink);
-
-    // Programmatically click the link to start the download
-    downloadLink.click();
-
-    // Remove the link element from the body
-    document.body.removeChild(downloadLink);
-});
+    if (correct === 0 && incorrect === 0) {
+        console.log("You haven't answered any questions.");
+        feedback.text("You haven't answered any questions.");
+    } else {
+        console.log("You have " + correct + " correct answers.");
+        feedback.text("You have " + correct + " out of " + totalElements + " correct answers.");
+    }
+}

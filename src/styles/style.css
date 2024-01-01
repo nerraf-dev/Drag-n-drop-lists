@@ -12,6 +12,11 @@
     text-align: center;
 }
 
+.form-control.input-items {
+    min-height: 8rem; /* Adjust as needed */
+    max-height: 20rem; /* Adjust as needed */
+    
+}
 /* .items-container {
     min-height: 20px;
     background-color: lightgrey;
