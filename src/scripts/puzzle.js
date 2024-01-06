@@ -35,7 +35,7 @@ function createItems(categories) {
     const allItems = $('#all-items-container');
     categories.forEach(category => {
         category.items.forEach(itemName => {
-            const item = $('<div>').addClass('item').attr('data-category', formatId(category.name)).text(itemName);
+            const item = $('<div>').addClass('item col-sm-4 col-md-3 col-lg-2').attr('data-category', formatId(category.name)).text(itemName);
             allItems.append(item);
         });
     });
